@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Click Recap</title>
+<style>
+  body { font-family: -apple-system, sans-serif; max-width: 560px; margin: 60px auto; padding: 0 20px; background: #f7f7f8; }
+  h1 { font-size: 1.6rem; }
+  .card { background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  label { display: block; margin-top: 16px; font-weight: 600; font-size: 0.9rem; }
+  input[type=file], select { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+  .checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
+  button { margin-top: 24px; width: 100%; padding: 12px; background: #111; color: #fff; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+  button:hover { background: #333; }
+  .flash { background: #fee; color: #900; padding: 10px; border-radius: 8px; margin-bottom: 16px; }
+  .note { color: #777; font-size: 0.85rem; margin-top: 10px; }
+</style>
+</head>
+<body>
+  <h1>🎬 One Click Recap</h1>
+  <p>Video upload လုပ်လိုက်ရင် မြန်မာအသံပါတဲ့ Recap Video ကို အလိုအလျောက် ပြန်ထုတ်ပေးပါမယ်။</p>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for m in messages %}
+        <div class="flash">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="card">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <label for="video">Video ဖိုင် (mp4 / mov / mkv / webm)</label>
+      <input type="file" id="video" name="video" accept="video/*" required>
+
+      <label for="tts_voice">မြန်မာအသံ</label>
+      <select id="tts_voice" name="tts_voice">
+        <option value="my-MM-NilarNeural">Nilar (အမျိုးသမီးအသံ)</option>
+        <option value="my-MM-ThihaNeural">Thiha (အမျိုးသားအသံ)</option>
+      </select>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="keep_original_audio" name="keep_original_audio">
+        <label for="keep_original_audio" style="margin:0;">မူရင်းအသံ အနည်းငယ် ရောသွင်းမည်</label>
+      </div>
+
+      <button type="submit">Recap Video ထုတ်မည်</button>
+      <p class="note">Video length ပေါ်မူတည်ပြီး process လုပ်ရတဲ့ အချိန် ကွာသွားနိုင်ပါသည်။</p>
+    </form>
+  </div>
+</body>
+</html>
